@@ -1,3 +1,5 @@
+Forked to get PageMethods inforamtion in the Glimplse results.
+
 #NOTE: Work on v2 of Glimpse has shifted to [Glimpse/Glimpse.Prototype](https://github.com/Glimpse/Glimpse.Prototype)
 
 ##The Diagnostics platform of the web [![Build Status](http://img.shields.io/teamcity/codebetter/bt428.svg)](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt428&guest=1)
