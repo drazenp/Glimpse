@@ -12,7 +12,7 @@ namespace Glimpse.AspNet
             HttpApplication = httpApplication;
         }
 
-        public override event EventHandler BeginRequest 
+        public override event EventHandler BeginRequest
         {
             add { HttpApplication.BeginRequest += value; }
             remove { HttpApplication.BeginRequest -= value; }
@@ -40,6 +40,12 @@ namespace Glimpse.AspNet
         {
             add { HttpApplication.PreSendRequestHeaders += value; }
             remove { HttpApplication.PreSendRequestHeaders -= value; }
+        }
+
+        public override event EventHandler EndRequest
+        {
+            add { HttpApplication.EndRequest += value; }
+            remove { HttpApplication.EndRequest -= value; }
         }
 
         public override HttpApplicationStateBase Application

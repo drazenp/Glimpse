@@ -8,7 +8,7 @@ using Glimpse.Core.Framework;
 
 namespace Glimpse.AspNet
 {
-    public class HttpModule : IHttpModule  
+    public class HttpModule : IHttpModule
     {
         private static readonly object LockObj = new object();
         private static readonly Factory Factory;
@@ -73,7 +73,8 @@ namespace Glimpse.AspNet
                 httpApplication.BeginRequest += (context, e) => BeginRequest(WithTestable(context));
                 httpApplication.PostAcquireRequestState += (context, e) => BeginSessionAccess(WithTestable(context));
                 httpApplication.PostRequestHandlerExecute += (context, e) => EndSessionAccess(WithTestable(context));
-                httpApplication.PostReleaseRequestState += (context, e) => EndRequest(WithTestable(context));
+                httpApplication.PostReleaseRequestState += (context, e) => OnPostReleaseRequestState(WithTestable(context));
+                httpApplication.EndRequest += (context, e) => OnEndRequest(WithTestable(context));
             }
         }
 
@@ -97,6 +98,23 @@ namespace Glimpse.AspNet
             }
 
             return runtime;
+        }
+
+        internal void OnPostReleaseRequestState(HttpContextBase httpContext)
+        {
+            httpContext.Items.Add("EndRequestCalled", true);
+
+            var runtime = GetRuntime(httpContext.Application);
+
+            runtime.EndRequest();
+        }
+
+        internal void OnEndRequest(HttpContextBase httpContext)
+        {
+            if (!httpContext.Items.Contains("EndRequestCalled"))
+            {
+                this.OnPostReleaseRequestState(httpContext);
+            }
         }
 
         internal void BeginRequest(HttpContextBase httpContext)

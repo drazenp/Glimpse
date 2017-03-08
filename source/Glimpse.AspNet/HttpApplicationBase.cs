@@ -15,6 +15,8 @@ namespace Glimpse.AspNet
 
         public abstract event EventHandler PreSendRequestHeaders;
 
+        public abstract event EventHandler EndRequest;
+
         public abstract HttpApplicationStateBase Application { get; set; }
     }
 }
